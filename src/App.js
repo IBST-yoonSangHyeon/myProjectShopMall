@@ -1,8 +1,14 @@
 
+import { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { S } from 'xmlchars/xml/1.0/ed5';
 import './App.css';
+import Data from './data.js';
 
 function App() {
+
+  let [shoes, shoes변경] = useState(Data);
+
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -35,26 +41,25 @@ function App() {
 
       <div className="contaier">
         <div className="row">
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-          </div>
-          <div className="col-md-4">
-          < img src="https://codingapple1.github.io/shop/shoes2.jpg" width="100%" />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>            
-          </div>
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes3.jpg" width="100%" />
-            <h4>상품명</h4>
-            <p>상품설명 & 가격</p>
-          </div>
+          { Data.map((item, idx, arr) => {
+            return <Shoeses key={ idx } imgUrl={ item.imgUrl } title={ item.title } content={ item.content } price={ item.price } />
+            }) 
+          }
         </div>
       </div>
 
     </div>
   );
+}
+
+function Shoeses( props ) {
+  return (
+    <div className="col-md-4">
+      <img src={ props.imgUrl } width="100%" />
+      <h4>{ props.title }</h4>
+      <p>{ props.content } { props.price }</p>
+    </div>
+  )
 }
 
 export default App;
