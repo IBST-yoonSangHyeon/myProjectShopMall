@@ -5,6 +5,7 @@ import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { S } from 'xmlchars/xml/1.0/ed5';
 import './App.css';
 import Data from './data.js';
+import { Link, Route, Switch } from 'react-router-dom';
 
 function App() {
 
@@ -32,24 +33,42 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className="p-5 mb-4 bg-light rounded-3 background">
-        <div className="container-fluid py-5">
-          <h1 className="display-5 fw-bold">20% Season Off</h1>
-          <p className="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-          <button className="btn btn-primary btn-lg" type="button">Example button</button>
-        </div>
-      </div>
 
-      <div className="contaier">
-        <div className="row">
-          {
-            shoes.map((a, i, arr) => {
-              return <Card shoes={ shoes[i] } i={ i } key={ i }/>
-            })
-          }
-        </div>
-      </div>
 
+      <Route exact path="/">
+        <div className="p-5 mb-4 bg-light rounded-3 background">
+          <div className="container-fluid py-5">
+            <h1 className="display-5 fw-bold">20% Season Off</h1>
+            <p className="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+            <button className="btn btn-primary btn-lg" type="button">Example button</button>
+          </div>
+        </div>        
+        <div className="contaier">
+          <div className="row">
+            {
+              shoes.map((a, i, arr) => {
+                return <Card shoes={ shoes[i] } i={ i } key={ i }/>
+              })
+            }
+          </div>
+        </div>
+      </Route>
+      <Route path="/detail">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+            </div>
+            <div className="col-md-6 mt-4">
+              <h4 className="pt-5">상품명</h4>
+              <p>상품설명</p>
+              <p>120000원</p>
+              <button className="btn btn-danger">주문하기</button> 
+            </div>
+          </div>
+        </div>         
+      </Route>
+      {/* <Route path="/어쩌구" component={ 모델 }></Route> */}
     </div>
   );
 }
