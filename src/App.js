@@ -9,7 +9,9 @@ import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 
 function App() {
-
+  // 중요한 데이터는 항상 App이라는 컴포넌트에 저장하는 것이 정석(국룰)
+  // 상위에서 하위로 보내는 것은 쉽지만 하위에서 상위로 데이터 전송은 힘듬
+  // 만약 state도 많아지면 관리하기 힘들어서 다른 파일로 빼서 보관하거나, redux를 사용하면됨.
   let [shoes, shoes변경] = useState(Data);
 
   return (
@@ -55,11 +57,10 @@ function App() {
           </div>
         </Route>
 
-        <Route path="/detail">
-          <Detail />
+        <Route path="/detail/:id">
+          <Detail shoes={shoes} />
         </Route>
-        {/* <Route path="/어쩌구" component={ 모델 }></Route> */}
-
+        
         <Route path="/:id">
           <div>아무거나 적었을때 이거 보여주셈</div>
         </Route>
