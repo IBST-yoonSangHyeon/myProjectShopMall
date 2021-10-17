@@ -6,6 +6,7 @@ import { S } from 'xmlchars/xml/1.0/ed5';
 import './App.css';
 import Data from './data.js';
 import { Link, Route, Switch } from 'react-router-dom';
+import Detail from './Detail';
 
 function App() {
 
@@ -19,8 +20,8 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link > <Link to="/">Home</Link> </Nav.Link>
+              <Nav.Link > <Link to="detail">Detail</Link> </Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -34,41 +35,35 @@ function App() {
       </Navbar>
 
 
+      <Switch>
+        <Route exact path="/">
+          <div className="p-5 mb-4 bg-light rounded-3 background">
+            <div className="container-fluid py-5">
+              <h1 className="display-5 fw-bold">20% Season Off</h1>
+              <p className="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
+              <button className="btn btn-primary btn-lg" type="button">Example button</button>
+            </div>
+          </div>        
+          <div className="contaier">
+            <div className="row">
+              {
+                shoes.map((a, i, arr) => {
+                  return <Card shoes={ shoes[i] } i={ i } key={ i }/>
+                })
+              }
+            </div>
+          </div>
+        </Route>
 
-      <Route exact path="/">
-        <div className="p-5 mb-4 bg-light rounded-3 background">
-          <div className="container-fluid py-5">
-            <h1 className="display-5 fw-bold">20% Season Off</h1>
-            <p className="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-            <button className="btn btn-primary btn-lg" type="button">Example button</button>
-          </div>
-        </div>        
-        <div className="contaier">
-          <div className="row">
-            {
-              shoes.map((a, i, arr) => {
-                return <Card shoes={ shoes[i] } i={ i } key={ i }/>
-              })
-            }
-          </div>
-        </div>
-      </Route>
-      <Route path="/detail">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-            </div>
-            <div className="col-md-6 mt-4">
-              <h4 className="pt-5">상품명</h4>
-              <p>상품설명</p>
-              <p>120000원</p>
-              <button className="btn btn-danger">주문하기</button> 
-            </div>
-          </div>
-        </div>         
-      </Route>
-      {/* <Route path="/어쩌구" component={ 모델 }></Route> */}
+        <Route path="/detail">
+          <Detail />
+        </Route>
+        {/* <Route path="/어쩌구" component={ 모델 }></Route> */}
+
+        <Route path="/:id">
+          <div>아무거나 적었을때 이거 보여주셈</div>
+        </Route>
+      </Switch>
     </div>
   );
 }
