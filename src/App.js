@@ -7,12 +7,14 @@ import './App.css';
 import Data from './data.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
+import axios from 'axios';
 
 function App() {
   // 중요한 데이터는 항상 App이라는 컴포넌트에 저장하는 것이 정석(국룰)
   // 상위에서 하위로 보내는 것은 쉽지만 하위에서 상위로 데이터 전송은 힘듬
   // 만약 state도 많아지면 관리하기 힘들어서 다른 파일로 빼서 보관하거나, redux를 사용하면됨.
   let [shoes, shoes변경] = useState(Data);
+  let [axioData, axioData변경] = useState([]);
 
   return (
     <div className="App">
@@ -54,6 +56,35 @@ function App() {
                 })
               }
             </div>
+            <button className="btn btn-primary" onClick={ () => { 
+              // ajax를 위해 fetch 사용 (호환성이 좋지 않음, 오브젝트로 따로 변경하는 작업이 필요함.)
+              // fetch() 
+
+              // ajax를 위해 axios 사용 (추천!!!)
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+              .then((result) => {
+                console.log(result);
+                console.log(result.data); // data만 받고 싶을때
+                axioData변경(result.data);
+                console.log('성공했어요.');
+              })
+              .catch(() => {
+                console.log('실패했어요.');
+              }); 
+             } }>더보기</button>
+
+            {axioData.length !== 0
+              ? <div className="contaier">
+                  <div className="row">
+                    {
+                      axioData.map((item, idx, arr) => {
+                        return <Card  shoes={item} i={item.id} key={item.id} />;
+                      })
+                    }
+                  </div>
+                </div>
+              : null
+            }
           </div>
         </Route>
 
