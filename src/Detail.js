@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components'; // css를 미리 입혀놓은 컴포넌트, className 작명 필요없음
+import './Detail.scss';
 
 
 let 박스 = styled.div`
@@ -23,9 +24,11 @@ function Detail ( props ) {
     return (
       <div className="container">
         <박스>
-          <제목 색상="blue" >Detail</제목>
-          <제목 색상="red" >Detail</제목>
+          <제목 className="red" >Detail</제목>
         </박스>
+        <div className="my-alert2">
+          <p>재고가 얼마 남지 않았습니다.</p>
+        </div>
         <div className="row">
           <div className="col-md-6">
             <img src={`https://codingapple1.github.io/shop/shoes${찾은상품.id+1}.jpg`} width="100%" />

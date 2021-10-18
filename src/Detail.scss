@@ -1,0 +1,55 @@
+
+$메인칼라 : #ff0000;
+
+.red {
+    color: $메인칼라;
+}
+
+// div.container h4 {
+//     color: blue;
+// }
+
+// div.container p {
+//     color: green;
+// }
+
+// sass 셀렉터 대신 쓰는 nesting 문법
+// div.container {
+//     h4 {
+//         color: blue;
+//     }
+//     p {
+//         color: green;
+//     }
+// }
+
+@mixin 함수() {
+    background-color: #eeeeee;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+}
+
+// 다른 색상의 alert UI가 필요하면?
+// Sass에서는 @extend가 있다!
+.my-alert {
+    @include 함수();
+}
+
+.my-alert2 {
+    @extend .my-alert;
+    background : #ffe591;
+}
+
+.my-alert2 {
+    @extend .my-alert;
+    background : #ff0000;
+}
+
+// SASS에는 @mixin(함수선언) / @include(함수호출) 가 있다.
+.my-alert p {
+    margin-bottom: 0;
+}
+
