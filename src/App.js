@@ -14,8 +14,9 @@ function App() {
   // 상위에서 하위로 보내는 것은 쉽지만 하위에서 상위로 데이터 전송은 힘듬
   // 만약 state도 많아지면 관리하기 힘들어서 다른 파일로 빼서 보관하거나, redux를 사용하면됨.
   let [shoes, shoes변경] = useState(Data);
-  let [axioData, axioData변경] = useState([]);
+  let [spinner, spinner변경] = useState(false);
 
+  
   return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -56,35 +57,42 @@ function App() {
                 })
               }
             </div>
-            <button className="btn btn-primary" onClick={ () => { 
-              // ajax를 위해 fetch 사용 (호환성이 좋지 않음, 오브젝트로 따로 변경하는 작업이 필요함.)
-              // fetch() 
-
-              // ajax를 위해 axios 사용 (추천!!!)
-              axios.get('https://codingapple1.github.io/shop/data2.json')
-              .then((result) => {
-                console.log(result);
-                console.log(result.data); // data만 받고 싶을때
-                axioData변경(result.data);
-                console.log('성공했어요.');
-              })
-              .catch(() => {
-                console.log('실패했어요.');
-              }); 
-             } }>더보기</button>
-
-            {axioData.length !== 0
-              ? <div className="contaier">
-                  <div className="row">
-                    {
-                      axioData.map((item, idx, arr) => {
-                        return <Card  shoes={item} i={item.id} key={item.id} />;
-                      })
-                    }
+            <div>
+              {
+                //로딩중이라는 UI 띄움
+                spinner === true 
+                ? <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
                   </div>
-                </div>
-              : null
-            }
+                : null
+              }
+            </div>
+            <button className="btn btn-primary" onClick={ () => { 
+              spinner변경(true);
+              setTimeout(() => {
+                
+                // ajax를 위해 fetch 사용 (호환성이 좋지 않음, 오브젝트로 따로 변경하는 작업이 필요함.)
+                // fetch() 
+                // ajax를 위해 axios 사용 (추천!!!)
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result) => {
+                  // 로딩중이라는 UI 안보이게 처리
+                  
+                  console.log(result);
+                  console.log(result.data); // data만 받고 싶을때
+                  let copyshoes = [...shoes, ...result.data]; // ...shoes 카피본 만들어주세요., ...덮게를 벅겨주세요.[{}, {}, {}] => {}, {}, {}
+                  console.log('copyshoes : ', copyshoes);
+                  shoes변경(copyshoes);
+                  console.log('성공했어요.');
+                  spinner변경(false);
+                })
+                .catch(() => {
+                  // 로딩중이라는 UI 안보이게 처리
+                  console.log('실패했어요.');
+                  spinner변경(false);
+                }); 
+              }, 3000);
+             } }>더보기</button>
           </div>
         </Route>
 
