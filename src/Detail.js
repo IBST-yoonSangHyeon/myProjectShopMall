@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components'; // css를 미리 입혀놓은 컴포넌트, className 작명 필요없음
@@ -21,6 +22,10 @@ function Detail ( props ) {
 
     // 라이프 싸이클 (컴포넌트 mount되었을때 , update될때 특정코드 () => {} 실행)
     useEffect(() => {
+      // Detail 컴포넌트 로드시 ajax로 데이터를 가져오고 싶음....
+      // axios.get()
+
+
       // 컴포넌트 등장시 실행됨
       let 타이머 = setTimeout(() => { alert변경(false) }, 2000);
       // 컴포넌트 업데이트시 실행됨

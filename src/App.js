@@ -14,7 +14,7 @@ function App() {
   // 상위에서 하위로 보내는 것은 쉽지만 하위에서 상위로 데이터 전송은 힘듬
   // 만약 state도 많아지면 관리하기 힘들어서 다른 파일로 빼서 보관하거나, redux를 사용하면됨.
   let [shoes, shoes변경] = useState(Data);
-  let [spinner, spinner변경] = useState(false);
+  
 
   
   return (
@@ -57,20 +57,10 @@ function App() {
                 })
               }
             </div>
-            <div>
-              {
-                //로딩중이라는 UI 띄움
-                spinner === true 
-                ? <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                : null
-              }
-            </div>
             <button className="btn btn-primary" onClick={ () => { 
-              spinner변경(true);
-              setTimeout(() => {
+                //axios.post('서버URL', {id : 'coding', pw : 1234}) // 헤더 전송방법 알아보기
                 
+
                 // ajax를 위해 fetch 사용 (호환성이 좋지 않음, 오브젝트로 따로 변경하는 작업이 필요함.)
                 // fetch() 
                 // ajax를 위해 axios 사용 (추천!!!)
@@ -84,14 +74,11 @@ function App() {
                   console.log('copyshoes : ', copyshoes);
                   shoes변경(copyshoes);
                   console.log('성공했어요.');
-                  spinner변경(false);
                 })
                 .catch(() => {
                   // 로딩중이라는 UI 안보이게 처리
                   console.log('실패했어요.');
-                  spinner변경(false);
                 }); 
-              }, 3000);
              } }>더보기</button>
           </div>
         </Route>
