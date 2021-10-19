@@ -14,7 +14,7 @@ function App() {
   // 상위에서 하위로 보내는 것은 쉽지만 하위에서 상위로 데이터 전송은 힘듬
   // 만약 state도 많아지면 관리하기 힘들어서 다른 파일로 빼서 보관하거나, redux를 사용하면됨.
   let [shoes, shoes변경] = useState(Data);
-  
+  let [재고, 재고변경] = useState([10, 11, 12]);
 
   
   return (
@@ -59,7 +59,7 @@ function App() {
             </div>
             <button className="btn btn-primary" onClick={ () => { 
                 //axios.post('서버URL', {id : 'coding', pw : 1234}) // 헤더 전송방법 알아보기
-                
+
 
                 // ajax를 위해 fetch 사용 (호환성이 좋지 않음, 오브젝트로 따로 변경하는 작업이 필요함.)
                 // fetch() 
@@ -84,7 +84,7 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes} />
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
         </Route>
         
         <Route path="/:id">
