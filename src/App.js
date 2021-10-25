@@ -1,6 +1,6 @@
 /* eslint-disable */ 
 
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { S } from 'xmlchars/xml/1.0/ed5';
 import './App.css';
@@ -8,6 +8,11 @@ import Data from './data.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 import axios from 'axios';
+
+// props 더 쓰는거 귀찮아.
+// <App>에 있는 재고 state를 <App>안의 <Card>안의 <컴포넌트>에 데이터 바인딩 하려면?
+// props 대신 context를 쓰자! 
+export let 재고context = React.createContext(); // 같은 변수 값을 공유할 범위 생성
 
 function App() {
   // 중요한 데이터는 항상 App이라는 컴포넌트에 저장하는 것이 정석(국룰)
@@ -50,13 +55,16 @@ function App() {
             </div>
           </div>        
           <div className="contaier">
-            <div className="row">
-              {
-                shoes.map((a, i, arr) => {
-                  return <Card shoes={ shoes[i] } i={ i } key={ i }/>
-                })
-              }
-            </div>
+            <재고context.Provider value={재고}>
+              <div className="row">
+                {
+                  shoes.map((a, i, arr) => {
+                    return <Card shoes={ shoes[i] } i={ i } key={ i }/>
+                  })
+                }
+              </div>
+            </재고context.Provider>
+
             <button className="btn btn-primary" onClick={ () => { 
                 //axios.post('서버URL', {id : 'coding', pw : 1234}) // 헤더 전송방법 알아보기
 
@@ -84,7 +92,9 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+          <재고context.Provider value={재고}>
+            <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+          </재고context.Provider>
         </Route>
         
         <Route path="/:id">
@@ -96,13 +106,24 @@ function App() {
 }
 
 function Card( props ) {
+
+  let 재고 = useContext(재고context);
+
   return (
     <div className="col-md-4">
       <img src={ `https://codingapple1.github.io/shop/shoes${props.i+1}.jpg` } width="100%" />
       <h4>{ props.shoes.title }</h4>
       <p>{ props.shoes.content } { props.price }</p>
+      
+      <Test></Test>
     </div>
   )
+}
+
+function Test(  ){
+  let 재고 = useContext(재고context);
+
+  return <p>재고 : {재고[0]}</p>
 }
 
 export default App;
