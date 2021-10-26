@@ -30,7 +30,19 @@ let 초기값 = [
 
 // redux 데이터 수정 정의
 function reducer( state = 초기값, 액션 ) {
-  if ( 액션.type === '수량증가' ) { // 수량증가라는 데이터수정 방법 정의한 것
+  
+  if ( 액션.type === '항목추가' ){
+    let copy = [...state];
+    let itemIdx = copy.findIndex(obj => obj.name === 액션.payload.name);
+    
+    if(itemIdx === -1){
+      console.log('추가');
+      copy.push(액션.payload);
+    }else{
+      copy[itemIdx].quan++;
+    }
+    return copy;
+  }else if ( 액션.type === '수량증가' ) { // 수량증가라는 데이터수정 방법 정의한 것
     let copy = [...state];
     copy[액션.idx].quan++;
     return copy; // 수정된 state 뱉어냄

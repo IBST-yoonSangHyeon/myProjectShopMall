@@ -6,6 +6,7 @@ import './Detail.scss';
 import {재고context} from './App'
 import { Nav } from 'react-bootstrap';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 
 let 박스 = styled.div`
@@ -74,6 +75,8 @@ function Detail ( props ) {
             <button className="btn btn-danger" onClick={
               () => {
                 props.재고변경([9, 11, 12]);
+                props.dispatch( {type : '항목추가', payload : { id : 찾은상품.id+1, name : 찾은상품.content, quan : 1 }} );
+                history.push('/cart');
               }
             }>주문하기</button> 
             <button className="btn btn-danger" onClick={ () => { history.goBack(); } }>뒤로가기</button>
@@ -124,4 +127,14 @@ function Info( props ) {
   )
 }
 
-export default Detail
+function state를props화( state ) {
+  console.log(state);
+  return { 
+      state : state.reducer , //store안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주셈
+      alert열렸니 : state.reducer2
+  }
+}
+
+export default connect(state를props화)(Detail)
+
+//export default Detail
