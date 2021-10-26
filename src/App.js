@@ -8,6 +8,7 @@ import Data from './data.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 import axios from 'axios';
+import Cart from './Cart';
 
 // props 더 쓰는거 귀찮아.
 // <App>에 있는 재고 state를 <App>안의 <Card>안의 <컴포넌트>에 데이터 바인딩 하려면?
@@ -95,6 +96,10 @@ function App() {
           <재고context.Provider value={재고}>
             <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
           </재고context.Provider>
+        </Route>
+
+        <Route path="/cart/">
+          <Cart />
         </Route>
         
         <Route path="/:id">
