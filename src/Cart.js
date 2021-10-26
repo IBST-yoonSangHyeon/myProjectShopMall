@@ -25,23 +25,40 @@ const Cart = ( props ) => {
                                     <td> { a.name } </td>
                                     <td> { a.quan } </td>
                                     <td>
-                                        <button onClick={ () => { props.dispatch( { type : '수량증가' } ) } }>+</button>
+                                        <button onClick={ () => { props.dispatch( { type : '수량증가', idx : i } ) } }>+</button>
                                         &nbsp;
-                                        <button onClick={ () => { props.dispatch( { type : '수량감소' } ) } }>-</button>
+                                        <button onClick={ () => { props.dispatch( { type : '수량감소', idx : i } ) } }>-</button>
                                     </td>
                                 </tr>
                         );
                     }) }
                     
                 </tbody>
-            </Table>            
+            </Table>
+            
+            {
+                props.alert열렸니 === true 
+                ? 
+                (
+                    <div className="my-alert2">
+                        <p>지금 구매하시면 신규할인 20%</p>
+                        <button onClick={ () => { props.dispatch( { type : 'alert닫기' }) } }>닫기</button>
+                    </div>
+                ) 
+                : null
+
+            }
+            
+
         </div>
     );
 };
 
 function state를props화( state ) {
+    console.log(state);
     return { 
-        state : state //store안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주셈
+        state : state.reducer , //store안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주셈
+        alert열렸니 : state.reducer2
     }
 }
 

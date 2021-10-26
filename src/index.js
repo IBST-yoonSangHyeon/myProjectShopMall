@@ -6,7 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
+
+
+let alert초기값 = true;
+
+function reducer2 ( state = alert초기값, 액션 ) {
+  
+  if(액션.type === 'alert닫기'){
+    return state = false;
+  } else {
+    return state;
+  }
+}
 
 
 let 초기값 = [
@@ -20,13 +32,13 @@ let 초기값 = [
 function reducer( state = 초기값, 액션 ) {
   if ( 액션.type === '수량증가' ) { // 수량증가라는 데이터수정 방법 정의한 것
     let copy = [...state];
-    copy[0].quan++;
+    copy[액션.idx].quan++;
     return copy; // 수정된 state 뱉어냄
   } else if(액션.type === '수량감소') {
     let copy = [...state];
-    copy[0].quan--;
-    if(copy[0].quan < 0){
-      copy[0].quan = 0;
+    copy[액션.idx].quan--;
+    if(copy[액션.idx].quan < 0){
+      copy[액션.idx].quan = 0;
     }
     return copy;
   }else {
@@ -35,7 +47,9 @@ function reducer( state = 초기값, 액션 ) {
   
 }
 
-let store = createStore(reducer);
+let store = createStore(combineReducers({
+  reducer, reducer2
+}));
 
 
 ReactDOM.render(
