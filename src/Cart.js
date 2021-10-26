@@ -18,13 +18,17 @@ const Cart = ( props ) => {
                     </tr>
                     </thead>
                     <tbody>
-                    { props.state.map((item, idx, arr) => {
+                    { props.state.map((a, i, arr) => {
                         return (
-                                <tr key={idx}>
-                                    <td>{ item.id }</td>
-                                    <td> { item.name } </td>
-                                    <td> { item.quan } </td>
-                                    <td>Table cell</td>
+                                <tr key={i}>
+                                    <td>{ a.id }</td>
+                                    <td> { a.name } </td>
+                                    <td> { a.quan } </td>
+                                    <td>
+                                        <button onClick={ () => { props.dispatch( { type : '수량증가' } ) } }>+</button>
+                                        &nbsp;
+                                        <button onClick={ () => { props.dispatch( { type : '수량감소' } ) } }>-</button>
+                                    </td>
                                 </tr>
                         );
                     }) }

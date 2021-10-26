@@ -8,9 +8,35 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-let store = createStore(() => {
-  return [ {id : 0, name : '멋진신발', quan : 2} , {id : 1, name : '짱신발', quan : 3} , {id : 2, name : '붉은신발', quan : 1}]
-});
+
+let 초기값 = [
+  {id : 0, name : '멋진신발', quan : 2} , 
+  {id : 1, name : '짱신발', quan : 3} , 
+  {id : 2, name : '붉은신발', quan : 1}
+]
+
+
+// redux 데이터 수정 정의
+function reducer( state = 초기값, 액션 ) {
+  if ( 액션.type === '수량증가' ) { // 수량증가라는 데이터수정 방법 정의한 것
+    let copy = [...state];
+    copy[0].quan++;
+    return copy; // 수정된 state 뱉어냄
+  } else if(액션.type === '수량감소') {
+    let copy = [...state];
+    copy[0].quan--;
+    if(copy[0].quan < 0){
+      copy[0].quan = 0;
+    }
+    return copy;
+  }else {
+    return state; // reducer 세팅법은 항상 state를 뱉어내어야한다.
+  }
+  
+}
+
+let store = createStore(reducer);
+
 
 ReactDOM.render(
   <React.StrictMode>
