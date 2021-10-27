@@ -1,11 +1,16 @@
 import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { Table } from 'react-bootstrap'; // export default : 기본, 중괄호 해당 이름만....
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 
 
 
 const Cart = ( props ) => {
+    // redux에 있던 모든 state
+    let state = useSelector((state) => state.reducer);
+    let despatch = useDispatch();
+    console.log(state);
+
     return (
         <div>
             <Table responsive="sm">
@@ -18,16 +23,16 @@ const Cart = ( props ) => {
                     </tr>
                     </thead>
                     <tbody>
-                    { props.state.map((a, i, arr) => {
+                    { state.map((a, i, arr) => {
                         return (
                                 <tr key={i}>
                                     <td>{ a.id }</td>
                                     <td> { a.name } </td>
                                     <td> { a.quan } </td>
                                     <td>
-                                        <button onClick={ () => { props.dispatch( { type : '수량증가', idx : i } ) } }>+</button>
+                                        <button onClick={ () => { despatch( { type : '수량증가', idx : i } ) } }>+</button>
                                         &nbsp;
-                                        <button onClick={ () => { props.dispatch( { type : '수량감소', idx : i } ) } }>-</button>
+                                        <button onClick={ () => { despatch( { type : '수량감소', idx : i } ) } }>-</button>
                                     </td>
                                 </tr>
                         );
@@ -54,14 +59,14 @@ const Cart = ( props ) => {
     );
 };
 
-function state를props화( state ) {
-    console.log(state);
-    return { 
-        state : state.reducer , //store안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주셈
-        alert열렸니 : state.reducer2
-    }
-}
+// function state를props화( state ) {
+//     console.log(state);
+//     return { 
+//         state : state.reducer , //store안에 있는 모든 데이터를 state라는 이름의 props로 바꿔주셈
+//         alert열렸니 : state.reducer2
+//     }
+// }
 
-export default connect(state를props화)(Cart)
+// export default connect(state를props화)(Cart)
 
-// export default Cart;
+export default Cart;
