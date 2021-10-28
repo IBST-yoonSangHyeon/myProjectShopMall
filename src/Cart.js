@@ -10,12 +10,14 @@ const Cart = ( props ) => {
     let state = useSelector((state) => state.reducer);
     let despatch = useDispatch();
     console.log(state);
+    let 버튼누르면 = (i) => { despatch( { type : '수량증가', idx : i } ) } 
+    let style = { color : 'red' };
 
     return (
         <div>
             <Table responsive="sm">
                 <thead>
-                    <tr>
+                    <tr style = { style }>
                         <th>#</th>
                         <th>상품명</th>
                         <th>수량</th>
@@ -30,7 +32,7 @@ const Cart = ( props ) => {
                                     <td> { a.name } </td>
                                     <td> { a.quan } </td>
                                     <td>
-                                        <button onClick={ () => { despatch( { type : '수량증가', idx : i } ) } }>+</button>
+                                        <button onClick={ () => { 버튼누르면(i) } }>+</button>
                                         &nbsp;
                                         <button onClick={ () => { despatch( { type : '수량감소', idx : i } ) } }>-</button>
                                     </td>
