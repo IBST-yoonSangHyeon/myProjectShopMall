@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useContext, useEffect, useCallback, useMemo, memo } from 'react';
 import { Table } from 'react-bootstrap'; // export default : 기본, 중괄호 해당 이름만....
 import { connect, useDispatch, useSelector } from 'react-redux';
 
@@ -56,7 +56,7 @@ const Cart = ( props ) => {
 
             }
             
-
+            <Parent 이름="존박1" 나이="20"/>
         </div>
     );
 };
@@ -70,5 +70,24 @@ const Cart = ( props ) => {
 // }
 
 // export default connect(state를props화)(Cart)
+
+
+function Parent(props){
+return (
+    <div>
+    <Child1 이름={ props.이름 }/>
+    <Child2 나이={ props.나이 }/> 
+    </div>
+)
+}
+function Child1(props){
+    useEffect( ()=>{ console.log('렌더링됨1') } );
+    return <div>1111</div>
+}
+// 기존 props와 바뀐 pops를 비교 연산후에 컴포넌트를 업데이트 할지 말지 결정함
+let Child2 = memo((props) => {
+    useEffect( ()=>{ console.log('렌더링됨2') } );
+    return <div>2222</div>
+});
 
 export default Cart;
